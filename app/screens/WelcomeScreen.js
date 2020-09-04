@@ -1,61 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
 	StyleSheet,
 	Text,
 	View,
 	Image,
 	Alert,
+	TextInput,
 	Button,
 	Platform,
 } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+
+import { styles } from '../styles/styles.js'
 
 export default function WelcomeScreen() {
 	return (
-		<View
-			style={{
-				backgroundColor: '#fff',
-				flex: 1,
-			}}
-		>
-			<View
-				style={{
-					backgroundColor: 'dodgerblue',
-					flex: 1,
-				}}
-			/>
-			<View
-				style={{
-					backgroundColor: 'gold',
-					flex: 1,
-				}}
-			/>
-			<View
-				style={{
-					backgroundColor: 'tomato',
-					flex: 1,
-				}}
-			/>
-		</View>
+		<>
+			<View style={styles.center}>
+				<Image source={require('../assets/mode_logo.png')} />
+			</View>
+		</>
 	)
 }
-
-// const styles = StyleSheet.create({
-// 	// container: {
-// 	// 	flex: 1,
-// 	// 	backgroundColor: '#fff',
-// 	// 	alignItems: 'center',
-// 	// 	justifyContent: 'center',
-// 	// },
-// 	loginButton: {
-// 		width: '100%',
-// 		height: 70,
-// 		backgroundColor: '#fc5c65',
-// 		alignSelf: 'flex-end',
-// 	},
-// 	signupButton: {
-// 		width: '100%',
-// 		height: 70,
-// 		backgroundColor: '#4ecdc4',
-// 		alignSelf: 'center',
-// 	},
-// })
