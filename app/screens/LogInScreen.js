@@ -22,7 +22,7 @@ export default function LogInScreen() {
 
 	useEffect(() => {
 		if (token !== null) {
-			navigation.navigate('LogInScreen')
+			navigation.navigate('Home')
 		}
 	}, [token, navigation])
 
