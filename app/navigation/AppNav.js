@@ -6,7 +6,7 @@ import DailyModeScreen from '../screens/DailyModeScreen'
 
 const Drawer = createDrawerNavigator()
 
-const AuthNavigator = () => (
+const AuthNav = () => (
 	<Drawer.Navigator>
 		<Drawer.Screen name='Welcome' children={createWelcomeStack} />
 		<Drawer.Screen name='Home' component={HomeScreen} />
@@ -15,4 +15,4 @@ const AuthNavigator = () => (
 	</Drawer.Navigator>
 )
 
-export default AuthNavigator
+export default AuthNav
