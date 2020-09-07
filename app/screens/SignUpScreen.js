@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Text, TextInput, Image, View } from 'react-native'
-// import DateTimePicker from '@react-native-community/datetimepicker'
+import { Button, Text, TextInput, Image, View } from 'react-native'
+import DatePicker from '@react-native-community/datetimepicker'
 
 import { styles } from '../styles/styles.js'
 
@@ -11,7 +11,17 @@ export default function SignUpScreen() {
 	const [password, onChangePassword] = useState('')
 	const [dateOfBirth, onChangeDateOfBirth] = useState('')
 	const [githubLink, onChangeGithubLink] = useState('')
+	const [mode, setMode] = useState('date')
+	const [show, setShow] = useState(false)
 
+	const showMode = (currentMode) => {
+		setShow(true)
+		setMode(currentMode)
+	}
+
+	const showDatepicker = () => {
+		showMode('date')
+	}
 	return (
 		<>
 			<View style={styles.center}>
@@ -21,18 +31,23 @@ export default function SignUpScreen() {
 					style={styles.textInput}
 					onChangeText={(text) => onChangeFirstName(text)}
 					value={firstName}
+					keyboardType='default'
 					placeholder='First Name'
 				/>
 				<TextInput
 					style={styles.textInput}
 					onChangeText={(text) => onChangeLastName(text)}
 					value={lastName}
+					keyboardType='default'
 					placeholder='Last Name'
 				/>
 				<TextInput
 					style={styles.textInput}
 					onChangeText={(text) => onChangeEmail(text)}
 					value={email}
+					autoCapitalize='none'
+					autoCorrect={false}
+					keyboardType='email-address'
 					placeholder='Email'
 				/>
 				<TextInput
@@ -40,19 +55,37 @@ export default function SignUpScreen() {
 					style={styles.textInput}
 					onChangeText={(text) => onChangePassword(text)}
 					value={password}
-					placeholder='password'
+					autoCapitalize='none'
+					autoCorrect={false}
+					secureTextEntry={true}
+					placeholder='Password'
 				/>
 				<TextInput
 					style={styles.textInput}
 					onChangeText={(text) => onChangeDateOfBirth(text)}
 					value={dateOfBirth}
-					placeholder='Date Of Birth'
+					keyboardType='number-pad'
+					placeholder='DOB - YYYY-MM-DD'
 				/>
 				<TextInput
 					style={styles.textInput}
 					onChangeText={(text) => onChangeGithubLink(text)}
 					value={githubLink}
+					keyboardType='url'
 					placeholder='Github Link'
+				/>
+				<Button
+					title='Sign up'
+					onPress={() =>
+						console.log(
+							firstName,
+							lastName,
+							email,
+							password,
+							dateOfBirth,
+							githubLink
+						)
+					}
 				/>
 			</View>
 		</>
