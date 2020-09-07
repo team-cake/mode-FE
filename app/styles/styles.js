@@ -21,4 +21,7 @@ export const styles = StyleSheet.create({
 		borderWidth: 1,
 		paddingLeft: 10,
 	},
+	bold: { fontWeight: 'bold' },
+	italic: { fontStyle: 'italic' },
+	underline: { textDecorationLine: 'underline' },
 })
