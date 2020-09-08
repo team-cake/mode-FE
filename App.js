@@ -1,21 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useContext } from 'react'
+import AuthNav from './app/navigation/AuthNav'
+import AppNav from './app/navigation/AppNav'
+import { NavigationContainer } from '@react-navigation/native'
+import jwtDecode from 'jwt-decode'
+import { Provider } from 'react-redux'
+import store from './app/store'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+	const [user, setUser] = useState()
+	const [token, setToken] = useState()
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	return (
+		<Provider store={store}>
+			<NavigationContainer>
+				{token ? <AppNav /> : <AuthNav />}
+			</NavigationContainer>
+		</Provider>
+	)
+}
