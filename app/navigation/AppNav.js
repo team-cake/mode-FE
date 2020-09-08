@@ -1,6 +1,7 @@
 import * as React from 'react'
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Entypo, Ionicons } from '@expo/vector-icons'
 import HomeScreen from '../screens/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import DailyModeScreen from '../screens/DailyModeScreen'
@@ -12,11 +13,11 @@ export default function AppNav() {
 		<Tab.Navigator initialRouteName='Home'>
 			<Tab.Screen
 				lazy={false}
-				name='Home'
+				name='Stats'
 				component={HomeScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons name='home' color={color} size={size} />
+						<Ionicons name='ios-stats' color={color} size={size} />
 					),
 				}}
 			/>
