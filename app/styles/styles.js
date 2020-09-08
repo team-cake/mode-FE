@@ -9,6 +9,12 @@ export const styles = StyleSheet.create({
 	title: {
 		fontSize: 36,
 		marginBottom: 16,
+		textAlign: 'center',
+	},
+	header: {
+		fontSize: 25,
+		marginBottom: 16,
+		textAlign: 'center',
 	},
 	androidButtonText: {
 		color: 'blue',
