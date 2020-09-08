@@ -42,7 +42,7 @@ export default function SignUpScreen() {
 	}
 	useEffect(() => {
 		if (token !== null) {
-			navigation.navigate('HomeScreen')
+			navigation.navigate('Home')
 		}
 	}, [token, navigation])
 
