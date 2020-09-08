@@ -1,6 +1,6 @@
 import { apiUrl } from '../../config/constants'
 import axios from 'axios'
-import { selectToken } from './selector'
+import { selectToken, selectUser } from './selector'
 import {
 	appLoading,
 	appDoneLoading,
@@ -68,7 +68,7 @@ export const login = (email, password) => {
 				email,
 				password,
 			})
-			console.log('do i get here too', response)
+			console.log('do i get here too', response.data)
 			dispatch(loginSuccess(response.data))
 		} catch (error) {
 			if (error.response) {
@@ -79,32 +79,6 @@ export const login = (email, password) => {
 		}
 	}
 }
-
-// export const login = (email, password) => {
-// 	return async (dispatch, getState) => {
-// 		dispatch(appLoading())
-// 		console.log('do i get here')
-// 		try {
-// 			const response = await axios.post(`${apiUrl}/login`, {
-// 				email,
-// 				password,
-// 			})
-// 			console.log('do i get here too', response)
-// 			dispatch(loginSuccess(response.data))
-// 			dispatch(showMessageWithTimeout('success', false, 'welcome back!', 1500))
-// 			dispatch(appDoneLoading())
-// 		} catch (error) {
-// 			if (error.response) {
-// 				console.log(error.response.data.message)
-// 				dispatch(setMessage('danger', true, error.response.data.message))
-// 			} else {
-// 				console.log(error.message)
-// 				dispatch(setMessage('danger', true, error.message))
-// 			}
-// 			dispatch(appDoneLoading())
-// 		}
-// 	}
-// }
 
 export const getUserWithStoredToken = () => {
 	return async (dispatch, getState) => {
@@ -139,9 +113,10 @@ export const getUserWithStoredToken = () => {
 	}
 }
 
-export const postDailyMode = (title, bid, url) => {
+export const postDailyMode = (mode, comment, image, userId) => {
 	return async (dispatch, getState) => {
-		const { user } = getState()
+		const user = selectUser(getState())
+		console.log('postDailyMode -> user', user)
 		const id = user.id
 		const token = user.token
 		try {
@@ -159,6 +134,7 @@ export const postDailyMode = (title, bid, url) => {
 					},
 				}
 			)
+			console.log('postDailyMode -> response', response)
 
 			dispatch(
 				showMessageWithTimeout(
