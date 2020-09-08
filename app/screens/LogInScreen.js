@@ -26,7 +26,7 @@ export default function LogInScreen() {
 
 	useEffect(() => {
 		if (token !== null) {
-			navigation.navigate('Home')
+			navigation.navigate('AppNav')
 		}
 	}, [token, navigation])
 
