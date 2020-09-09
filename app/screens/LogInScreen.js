@@ -27,14 +27,17 @@ export default function LogInScreen() {
 
 	useEffect(() => {
 		if (token !== null) {
-			navigation.navigate('Home')
+			navigation.navigate('AppNav')
 		}
 	}, [token, navigation])
 
 	return (
 		<>
 			<View style={styles.center}>
-				<StatusBar style='light' backgroundColor='grey' />
+				<StatusBar
+					// style='light' backgroundColor='grey'
+					setHidden={true}
+				/>
 				<Image source={require('../assets/mode_logo.png')} />
 				<TextInput
 					style={styles.textInput}
