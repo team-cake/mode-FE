@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { LineChart } from 'react-native-chart-kit'
 import { styles } from '../styles/styles.js'
-import {
-	Button,
-	FlatList,
-	Image,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	View,
-	Dimensions,
-} from 'react-native'
+import { ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../store/user/actions'
 import { selectToken, selectUser } from '../store/user/selector'
+import AppButton from '../Components/AppButton'
 
 export default function Home() {
 	const dispatch = useDispatch()
 	const navigation = useNavigation()
 	const token = useSelector(selectToken)
 	const user = useSelector(selectUser)
+	console.log('Home -> user', user)
 
 	const dataFirst = {
 		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -54,7 +47,7 @@ export default function Home() {
 		],
 	}
 
-	function onPress(email, password) {
+	function onPress() {
 		dispatch(logOut())
 	}
 
@@ -68,24 +61,24 @@ export default function Home() {
 		<>
 			<View style={styles.center}>
 				<ScrollView>
-					<Image source={require('../assets/mode_logo.png')} />
-					<Button title='LogOut' onPress={() => onPress(logOut())} />
-					<Text style={styles.header}>home</Text>
-					<Button width='10%' title='Day' />
-					<Button title='Week' />
-					<Button title='Month' />
+					<Text style={styles.small}>mode</Text>
+					<AppButton title='Log out' onPress={() => onPress(logOut())} />
+					<Text style={styles.header}>Stats</Text>
+					<AppButton title='Day' />
+					<AppButton title='Week' />
+					<AppButton title='Month' />
 					<LineChart
 						data={dataFirst}
-						width={Dimensions.get('window').width} // from react-native
+						width={Dimensions.get('window').width}
 						height={220}
 						yAxisLabel='$'
 						yAxisSuffix='k'
-						yAxisInterval={1} // optional, defaults to 1
+						yAxisInterval={1}
 						chartConfig={{
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
 							backgroundGradientTo: '#08130D',
-							decimalPlaces: 2, // optional, defaults to 2dp
+							decimalPlaces: 2,
 							color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							style: {
@@ -103,18 +96,19 @@ export default function Home() {
 							borderRadius: 16,
 						}}
 					/>
+					<Text style={styles.small}>Your mode history</Text>
 					<LineChart
 						data={dataSec}
-						width={Dimensions.get('window').width} // from react-native
+						width={Dimensions.get('window').width}
 						height={220}
 						yAxisLabel='$'
 						yAxisSuffix='k'
-						yAxisInterval={1} // optional, defaults to 1
+						yAxisInterval={1}
 						chartConfig={{
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
 							backgroundGradientTo: '#08130D',
-							decimalPlaces: 2, // optional, defaults to 2dp
+							decimalPlaces: 2,
 							color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							style: {
@@ -132,7 +126,7 @@ export default function Home() {
 							borderRadius: 16,
 						}}
 					/>
-					<Image source={require('../assets/mode_logo.png')} />
+					<Text style={styles.small}>Your code history</Text>
 				</ScrollView>
 			</View>
 		</>
