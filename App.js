@@ -5,15 +5,15 @@ import { NavigationContainer } from '@react-navigation/native'
 import jwtDecode from 'jwt-decode'
 import { Provider } from 'react-redux'
 import store from './app/store'
+import AppContainer from './app/navigation/index'
 
 export default function App() {
-	const [user, setUser] = useState()
-	const [token, setToken] = useState()
-
 	return (
 		<Provider store={store}>
-			<NavigationContainer>
-				{token ? <AppNav /> : <AuthNav />}
+			<NavigationContainer independent={true}>
+				{/* <AppNav /> */}
+				<AuthNav />
+				{/* <AppContainer /> */}
 			</NavigationContainer>
 		</Provider>
 	)
