@@ -32,6 +32,7 @@
 		"expo-vector-icons": "^10.0.1",
 		"jwt-decode": "^2.2.0",
 		"link": "^0.1.5",
+		"moment": "^2.27.0",
 		"native-base": "^2.13.14",
 		"react": "~16.11.0",
 		"react-dom": "~16.11.0",
