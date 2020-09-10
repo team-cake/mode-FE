@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	formContainer: {},
 	center: {
 		flex: 1,
 		justifyContent: 'center',
@@ -70,6 +76,7 @@ export const styles = StyleSheet.create({
 	bold: { fontWeight: 'bold' },
 	italic: { fontStyle: 'italic' },
 	underline: { textDecorationLine: 'underline' },
+	keyboardAwareView: {},
 	card: {
 		borderRadius: 6,
 		elevation: 3,
@@ -85,5 +92,28 @@ export const styles = StyleSheet.create({
 	cardContent: {
 		marginHorizontal: 18,
 		marginVertical: 20,
+	},
+	emojiContainer: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		marginBottom: 25,
+	},
+	emojiTouchable: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 60,
+		width: 60,
+	},
+	emojiSelected: {
+		backgroundColor: 'grey',
+	},
+	emoji: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 42,
+		width: 42,
+		borderRadius: 100,
+		fontSize: 27.5,
+		textAlign: 'center',
 	},
 })
