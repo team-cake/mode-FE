@@ -14,7 +14,7 @@ export default function LogInScreen() {
 	const token = useSelector(selectToken)
 	const user = useSelector(selectUser)
 	// console.log('LogInScreen -> user', user)
-	console.log('LogInScreen -> token', token)
+	// console.log('LogInScreen -> token', token)
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
