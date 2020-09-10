@@ -39,10 +39,15 @@ export default function DailyMode() {
 		<>
 			<View style={styles.center}>
 				{/* <Text style={styles.header}>What is your mode today?</Text> */}
+				<Text>mode 1</Text>
 				<Fontisto name='frowning' size={24} color='black' />
+				<Text>mode 2</Text>
 				<Fontisto name='confused' size={24} color='black' />
+				<Text>mode 3</Text>
 				<Fontisto name='neutral' size={24} color='black' />
+				<Text>mode 4</Text>
 				<Fontisto name='slightly-smile' size={24} color='black' />
+				<Text>mode 5</Text>
 				<Fontisto name='smiley' size={24} color='black' />
 				<TextInput
 					style={styles.textInput}
