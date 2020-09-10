@@ -2,13 +2,25 @@ import axios from 'axios'
 import { apiUrl } from '../../config/constants'
 
 export const fetchDailyModes = () => {
+	console.log('do i get here')
 	return async (dispatch, getState) => {
-		const { dailymode } = getState()
-		if (!dailymode.length) {
-			const response = await axios.get(`${apiUrl}`)
-			const dailymodes = response.data
-			dispatch({ type: 'ALL_DAILYMODES', payload: dailymodes })
-		}
+		// const { user } = getState()
+		// const userId = user.id
+		// console.log('fetchDailyModes -> userId', userId)
+
+		// const { dailymode } = getState()
+		console.log('do i get here too')
+		// if (!dailymode.length) {
+		const response = await axios.get(`${apiUrl}/dailymode`)
+		// const response = await axios.get(`${apiUrl}/user/${userId}dailymode`)
+		const modes = response.data.rows
+		console.log('fetchDailyModes -> modes', modes)
+
+		// const mode = await modes.findByPk(userId)
+		// console.log('fetchDailyModes -> mode', mode)
+
+		dispatch({ type: 'ALL_DAILYMODES', payload: modes })
+		// }
 	}
 }
 
