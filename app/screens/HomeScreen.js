@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import moment from 'moment'
 import { LineChart } from 'react-native-chart-kit'
 import { styles } from '../styles/styles.js'
 import { ScrollView, Text, View, Dimensions } from 'react-native'
@@ -16,7 +17,15 @@ export default function Home() {
 	console.log('Home -> user', user)
 
 	const dataFirst = {
-		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+		labels: [
+			moment().subtract(6, 'd').format('MMM Do'),
+			moment().subtract(5, 'd').format('MMM Do'),
+			moment().subtract(4, 'd').format('MMM Do'),
+			moment().subtract(3, 'd').format('MMM Do'),
+			moment().subtract(2, 'd').format('MMM Do'),
+			moment().subtract(1, 'd').format('MMM Do'),
+			moment().format('MMM Do'),
+		],
 		datasets: [
 			{
 				data: [
@@ -32,7 +41,15 @@ export default function Home() {
 	}
 
 	const dataSec = {
-		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+		labels: [
+			moment().subtract(6, 'd').format('MMM Do'),
+			moment().subtract(5, 'd').format('MMM Do'),
+			moment().subtract(4, 'd').format('MMM Do'),
+			moment().subtract(3, 'd').format('MMM Do'),
+			moment().subtract(2, 'd').format('MMM Do'),
+			moment().subtract(1, 'd').format('MMM Do'),
+			moment().format('MMM Do'),
+		],
 		datasets: [
 			{
 				data: [
@@ -64,6 +81,12 @@ export default function Home() {
 					<Text style={styles.small}>mode</Text>
 					<AppButton title='Log out' onPress={() => onPress(logOut())} />
 					<Text style={styles.header}>Stats</Text>
+					<Text style={styles.small}>
+						Current Date: {moment().format('MMM Do YYYY')}{' '}
+					</Text>
+					<Text style={styles.small}>
+						Current Time: {moment().format('LTS')} 7 days ago{' '}
+					</Text>
 					<AppButton title='Day' />
 					<AppButton title='Week' />
 					<AppButton title='Month' />
