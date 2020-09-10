@@ -5,6 +5,7 @@ const initialState = {
 	token: AsyncStorage.getItem('token'),
 	firstName: null,
 	email: null,
+	id: null,
 }
 
 export default (state = initialState, action) => {

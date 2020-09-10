@@ -1,4 +1,3 @@
-export const getDailymodes = (reduxState) => {
-	console.log('getDailymodes -> getDailymodes', getDailymodes)
+export const selectDailymodes = (reduxState) => {
 	return reduxState.dailymode
 }
