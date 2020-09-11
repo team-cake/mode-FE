@@ -38,6 +38,12 @@ export const styles = StyleSheet.create({
 		marginBottom: 16,
 		textAlign: 'center',
 	},
+	medium: {
+		fontFamily: 'Roboto-Light',
+		fontSize: 15,
+		marginBottom: 16,
+		textAlign: 'center',
+	},
 	small: {
 		fontFamily: 'Roboto-Light',
 		fontSize: 15,
@@ -60,11 +66,10 @@ export const styles = StyleSheet.create({
 		color: 'blue',
 		fontSize: 20,
 	},
-	text: {
+	btnText: {
 		fontFamily: 'Roboto-Light',
 		color: '#ffffff',
 		fontSize: 12,
-		// textTransform: 'pascalcase',
 	},
 	textInput: {
 		height: 40,
