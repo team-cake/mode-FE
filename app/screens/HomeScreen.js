@@ -54,22 +54,8 @@ export default function Home() {
 		],
 		datasets: [
 			{
-				data: [
-					// mood[1],
-					// mood[2],
-					// mood[3],
-					// mood[4],
-					// mood[5],
-					// mood[6],
-					// mood[7],
-					4,
-					2,
-					3,
-					4,
-					1,
-					4,
-					5,
-				],
+				data: mood,
+				// [4, 2, 3, 4, 1, 4, 5],
 			},
 		],
 	}
