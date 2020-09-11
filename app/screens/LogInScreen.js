@@ -34,8 +34,10 @@ export default function LogInScreen() {
 			<View style={styles.center}>
 				<StatusBar setHidden={true} />
 				<Image source={require('../assets/mode_logo.png')} />
+				<Text> </Text>
+
 				<TextInput
-					style={styles.textInput}
+					style={styles.textInputLogin}
 					onChangeText={(text) => setEmail(text)}
 					value={email}
 					autoCapitalize='none'
@@ -43,8 +45,10 @@ export default function LogInScreen() {
 					keyboardType='email-address'
 					placeholder='email'
 				/>
+				<Text> </Text>
+
 				<TextInput
-					style={styles.textInput}
+					style={styles.textInputLogin}
 					onChangeText={(text) => setPassword(text)}
 					value={password}
 					autoCapitalize='none'
@@ -52,13 +56,15 @@ export default function LogInScreen() {
 					secureTextEntry={true}
 					placeholder='password'
 				/>
+				<Text> </Text>
 				<Button title='Log In' onPress={() => onPress(email, password)} />
+				<Text> </Text>
 				<Text
-					title='Sign Up'
+					title='Sign Up.'
 					style={styles.underline}
 					onPress={() => navigation.navigate('SignUp')}
 				>
-					Sign up
+					No account yet? Sign up.
 				</Text>
 			</View>
 		</>

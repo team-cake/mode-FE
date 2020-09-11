@@ -106,9 +106,11 @@ export default function DailyMode() {
 						</View>
 						<View>
 							<TextInput
-								style={styles.textInput}
+								style={styles.textInputComment}
 								placeholder={'Comment'}
 								value={comment}
+								multiLine
+								// textAlignVertical='top'
 								onChangeText={(text) => {
 									setComment(text)
 								}}
@@ -116,8 +118,9 @@ export default function DailyMode() {
 							<View style={{ height: 21 }} />
 							<TextInput
 								style={styles.textInput}
-								placeholder={'Image'}
+								placeholder={'Image URL'}
 								value={image}
+								keyboardType='url'
 								onChangeText={(text) => {
 									setImage(text)
 									console.log('')
