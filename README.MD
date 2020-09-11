@@ -33,7 +33,12 @@ I hope this app will help them a little bit.
 
 ## Images
 
-gifs of app
+![splashscreen](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/splashscreen.gif)
+![login](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/login.gif)  
+![adddailymode](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/addDailyMode.gif)
+![dailymode](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/dailymode.gif)  
+![stats](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/stats.gif)
+![stats2](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/stats2.gif)
 
 - [Wireframe](https://wireframepro.mockflow.com/view/mode-wireframe)
 - [Database Diagram](https://dbdiagram.io/d/5f565e6e88d052352cb646a1)
