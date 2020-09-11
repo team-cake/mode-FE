@@ -71,24 +71,6 @@ export default function ProfileScreen() {
 					<Text style={styles.small}>mode</Text>
 
 					<Text style={styles.title}>Your Daily Modes</Text>
-					{/* <ModeCard
-						key={dailyMode.id}
-						mode={dailyMode.mode}
-						date={dailyMode.createdAt}
-						image={dailyMode.image}
-						comment={dailyMode.comment}
-					/> */}
-					{/* {dms.map((dm) => {
-						return (
-							<ModeCard
-								key={dm.id}
-								mode={dm.mode}
-								date={moment(dm.createdAt).format('MMM Do YYYY')}
-								image={dm.image}
-								comment={dm.comment}
-							/>
-						)
-					})} */}
 					{sortModes.map((sortmode) => {
 						return (
 							<ModeCard
