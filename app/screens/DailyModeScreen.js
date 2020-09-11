@@ -1,62 +1,142 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Text, TextInput, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import {
+	Button,
+	SafeAreaView,
+	StatusBar,
+	Text,
+	View,
+	TextInput,
+	TouchableOpacity,
+} from 'react-native'
+import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { postDailyMode } from '../store/user/actions'
-import { selectToken, selectUser } from '../store/user/selector'
+import { selectUser } from '../store/user/selector'
 
+import { emojis } from '../assets/modes'
 import { styles } from '../styles/styles.js'
 
+import axios from 'axios'
+import { apiUrl } from '../config/constants'
+
+// let emojis = [
+// 	{
+// 		id: '1',
+// 		val: '🙁',
+// 	},
+// 	{
+// 		id: '2',
+// 		val: '😕',
+// 	},
+// 	{
+// 		id: '3',
+// 		val: '😐',
+// 	},
+// 	{
+// 		id: '4',
+// 		val: '🙂',
+// 	},
+// 	{
+// 		id: '5',
+// 		val: '😀',
+// 	},
+// ]
+
 export default function DailyMode() {
-	const [mode, setMode] = useState('')
+	const [emoji, setEmoji] = useState('1')
 	const [comment, setComment] = useState('')
 	const [image, setImage] = useState('')
-	const [loading, setLoading] = useState('')
-	const dispatch = useDispatch()
-	const token = useSelector(selectToken)
-	console.log('DailyMode -> token', token)
+	const [loading, setLoading] = useState(false)
 
 	const user = useSelector(selectUser)
 	console.log('DailyMode -> user', user)
 
 	const navigation = useNavigation()
 
-	function onPress(mode, comment, image, userId) {
-		dispatch(postDailyMode(mode, comment, image, userId))
-		setMode('')
-		setComment('')
-		setImage('')
+	async function onPressSend(mode, comment, image, userId) {
+		console.log('Starting')
+		setLoading(true)
+		await axios
+			.post(`${apiUrl}/dailymode`, {
+				mode,
+				comment,
+				image,
+				userId,
+			})
+			.catch((e) => {
+				setLoading(false)
+				console.log('Error: ', e)
+			})
+		setLoading(false)
+		console.log('Ended')
+		navigation.navigate('AppNav')
 	}
-
-	// useEffect(() => {
-	// 	if (token !== null) {
-	// 		navigation.navigate('Home')
-	// 	}
-	// }, [token, navigation])
 
 	return (
 		<>
-			<View style={styles.center}>
-				<Text style={styles.header}>What is your mode today?</Text>
-				<TextInput
-					style={styles.textInput}
-					onChangeText={(text) => setMode(text)}
-					value={mode}
-					keyboardType='number-pad'
-					placeholder='mode 1 - 5'
-				/>
-				<TextInput
-					style={styles.textInput}
-					onChangeText={(text) => setComment(text)}
-					value={comment}
-					keyboardType='default'
-					placeholder='Comment'
-				/>
-				<Button
-					title='Add mode'
-					onPress={() => onPress(mode, comment, image)}
-				/>
-			</View>
+			<SafeAreaView style={{ flex: 1 }}>
+				<StatusBar />
+				<Text style={styles.small}>mode</Text>
+
+				<View style={styles.container}>
+					<Text style={styles.header}>What is your mode today?</Text>
+
+					<View style={styles.formContainer}>
+						<View style={styles.emojiContainer}>
+							{emojis.map((e) => {
+								return (
+									<TouchableOpacity
+										key={e.id}
+										onPress={() => {
+											setEmoji(e.id)
+										}}
+										style={styles.emojiTouchable}
+									>
+										<Text
+											style={[
+												styles.emoji,
+												e.id.toString() === emoji.toString() &&
+													styles.emojiSelected,
+											]}
+										>
+											{e.val}
+										</Text>
+									</TouchableOpacity>
+								)
+							})}
+						</View>
+						<View>
+							<TextInput
+								style={styles.textInputComment}
+								placeholder={'Comment'}
+								value={comment}
+								multiLine
+								// textAlignVertical='top'
+								onChangeText={(text) => {
+									setComment(text)
+								}}
+							/>
+							<View style={{ height: 21 }} />
+							<TextInput
+								style={styles.textInput}
+								placeholder={'Image URL'}
+								value={image}
+								keyboardType='url'
+								onChangeText={(text) => {
+									setImage(text)
+									console.log('')
+								}}
+							/>
+						</View>
+						<View style={{ height: 50 }} />
+						<Button
+							title={loading ? 'Sending your mode...' : 'Add Mode'}
+							onPress={async () => {
+								await onPressSend(emoji, comment, image, user.id)
+							}}
+						/>
+					</View>
+				</View>
+			</SafeAreaView>
 		</>
 	)
 }

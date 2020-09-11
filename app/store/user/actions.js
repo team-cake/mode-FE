@@ -35,7 +35,7 @@ export const signUp = (
 	githubLink
 ) => {
 	return async (dispatch, getState) => {
-		console.log('do i get here')
+		// console.log('do i get here')
 		try {
 			const response = await axios.post(`${apiUrl}/signup`, {
 				firstName,
@@ -45,7 +45,7 @@ export const signUp = (
 				dateOfBirth,
 				githubLink,
 			})
-			console.log('do i get here too')
+			// console.log('do i get here too')
 			dispatch(loginSuccess(response.data))
 		} catch (error) {
 			if (error.response) {
@@ -62,13 +62,13 @@ export const signUp = (
 
 export const login = (email, password) => {
 	return async (dispatch, getState) => {
-		console.log('do i get here')
+		// console.log('do i get here')
 		try {
 			const response = await axios.post(`${apiUrl}/login`, {
 				email,
 				password,
 			})
-			console.log('do i get here too', response.data)
+			// console.log('do i get here too', response.data)
 			dispatch(loginSuccess(response.data))
 		} catch (error) {
 			if (error.response) {

@@ -40,11 +40,11 @@ export default function SignUpScreen() {
 		setDateOfBirth('')
 		setGithubLink('')
 	}
-	useEffect(() => {
-		if (token !== null) {
-			navigation.navigate('Home')
-		}
-	}, [token, navigation])
+	// useEffect(() => {
+	// 	if (token !== null) {
+	// 		navigation.navigate('Home')
+	// 	}
+	// }, [token, navigation])
 
 	return (
 		<>

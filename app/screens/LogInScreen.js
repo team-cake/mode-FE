@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { StatusBar } from 'expo-status-bar'
 import { Text, View, Image, TextInput, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,8 +13,6 @@ export default function LogInScreen() {
 	const dispatch = useDispatch()
 	const token = useSelector(selectToken)
 	const user = useSelector(selectUser)
-	// console.log('LogInScreen -> user', user)
-	console.log('LogInScreen -> token', token)
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -26,16 +25,19 @@ export default function LogInScreen() {
 
 	useEffect(() => {
 		if (token !== null) {
-			navigation.navigate('Home')
+			navigation.navigate('AppNav')
 		}
 	}, [token, navigation])
 
 	return (
 		<>
 			<View style={styles.center}>
+				<StatusBar setHidden={true} />
 				<Image source={require('../assets/mode_logo.png')} />
+				<Text> </Text>
+
 				<TextInput
-					style={styles.textInput}
+					style={styles.textInputLogin}
 					onChangeText={(text) => setEmail(text)}
 					value={email}
 					autoCapitalize='none'
@@ -43,8 +45,10 @@ export default function LogInScreen() {
 					keyboardType='email-address'
 					placeholder='email'
 				/>
+				<Text> </Text>
+
 				<TextInput
-					style={styles.textInput}
+					style={styles.textInputLogin}
 					onChangeText={(text) => setPassword(text)}
 					value={password}
 					autoCapitalize='none'
@@ -52,13 +56,15 @@ export default function LogInScreen() {
 					secureTextEntry={true}
 					placeholder='password'
 				/>
+				<Text> </Text>
 				<Button title='Log In' onPress={() => onPress(email, password)} />
+				<Text> </Text>
 				<Text
-					title='Sign Up'
+					title='Sign Up.'
 					style={styles.underline}
 					onPress={() => navigation.navigate('SignUp')}
 				>
-					Sign up
+					No account yet? Sign up.
 				</Text>
 			</View>
 		</>

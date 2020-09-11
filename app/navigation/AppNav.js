@@ -1,18 +1,50 @@
-import React from 'react'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import * as React from 'react'
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { MaterialCommunityIcons, Entypo, Ionicons } from '@expo/vector-icons'
 import HomeScreen from '../screens/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import DailyModeScreen from '../screens/DailyModeScreen'
 
-const Drawer = createDrawerNavigator()
+const Tab = createBottomTabNavigator()
 
-const AuthNav = () => (
-	<Drawer.Navigator>
-		<Drawer.Screen name='Welcome' children={createWelcomeStack} />
-		<Drawer.Screen name='Home' component={HomeScreen} />
-		<Drawer.Screen name='Profile' component={ProfileScreen} />
-		<Drawer.Screen name='DailyMode' component={DailyModeScreen} />
-	</Drawer.Navigator>
-)
-
-export default AuthNav
+export default function AppNav() {
+	return (
+		<Tab.Navigator initialRouteName='Home'>
+			<Tab.Screen
+				lazy={false}
+				name='Stats'
+				component={HomeScreen}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='ios-stats' color={color} size={size} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				lazy={false}
+				name='Add Mode'
+				component={DailyModeScreen}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Entypo name='code' color={color} size={size} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				lazy={false}
+				name='Daily Modes'
+				component={ProfileScreen}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<MaterialCommunityIcons
+							name='face-profile'
+							color={color}
+							size={size}
+						/>
+					),
+				}}
+			/>
+		</Tab.Navigator>
+	)
+}
