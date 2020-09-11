@@ -23,7 +23,7 @@ export default function AppNav() {
 			/>
 			<Tab.Screen
 				lazy={false}
-				name='DailyMode'
+				name='Add Mode'
 				component={DailyModeScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -33,7 +33,7 @@ export default function AppNav() {
 			/>
 			<Tab.Screen
 				lazy={false}
-				name='Profile'
+				name='Daily Modes'
 				component={ProfileScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (

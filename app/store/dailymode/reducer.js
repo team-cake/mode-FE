@@ -1,4 +1,9 @@
-const initialState = []
+const initialState = {
+	mode: null,
+	comment: null,
+	image: null,
+	createdAt: null,
+}
 
 export default (state = initialState, action) => {
 	switch (action.type) {

@@ -9,7 +9,7 @@ function AppButton({ title, onPress }) {
 				style={[styles.button, { backgroundColor: 'grey' }]}
 				onPress={onPress}
 			>
-				<Text style={styles.text}>{title}</Text>
+				<Text style={styles.btnText}>{title}</Text>
 			</TouchableOpacity>
 		</View>
 	)

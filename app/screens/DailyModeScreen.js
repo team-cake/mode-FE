@@ -12,33 +12,34 @@ import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { selectUser } from '../store/user/selector'
 
+import { emojis } from '../assets/modes'
 import { styles } from '../styles/styles.js'
 
 import axios from 'axios'
 import { apiUrl } from '../config/constants'
 
-let emojis = [
-	{
-		id: '1',
-		val: '🙁',
-	},
-	{
-		id: '2',
-		val: '😕',
-	},
-	{
-		id: '3',
-		val: '😐',
-	},
-	{
-		id: '4',
-		val: '🙂',
-	},
-	{
-		id: '5',
-		val: '😀',
-	},
-]
+// let emojis = [
+// 	{
+// 		id: '1',
+// 		val: '🙁',
+// 	},
+// 	{
+// 		id: '2',
+// 		val: '😕',
+// 	},
+// 	{
+// 		id: '3',
+// 		val: '😐',
+// 	},
+// 	{
+// 		id: '4',
+// 		val: '🙂',
+// 	},
+// 	{
+// 		id: '5',
+// 		val: '😀',
+// 	},
+// ]
 
 export default function DailyMode() {
 	const [emoji, setEmoji] = useState('1')
@@ -74,12 +75,14 @@ export default function DailyMode() {
 		<>
 			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar />
+				<Text style={styles.small}>mode</Text>
+
 				<View style={styles.container}>
 					<Text style={styles.header}>What is your mode today?</Text>
 
 					<View style={styles.formContainer}>
 						<View style={styles.emojiContainer}>
-							{emojis.map((e, n) => {
+							{emojis.map((e) => {
 								return (
 									<TouchableOpacity
 										key={e.id}

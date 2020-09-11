@@ -13,8 +13,6 @@ export default function LogInScreen() {
 	const dispatch = useDispatch()
 	const token = useSelector(selectToken)
 	const user = useSelector(selectUser)
-	// console.log('LogInScreen -> user', user)
-	// console.log('LogInScreen -> token', token)
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -34,10 +32,7 @@ export default function LogInScreen() {
 	return (
 		<>
 			<View style={styles.center}>
-				<StatusBar
-					// style='light' backgroundColor='grey'
-					setHidden={true}
-				/>
+				<StatusBar setHidden={true} />
 				<Image source={require('../assets/mode_logo.png')} />
 				<TextInput
 					style={styles.textInput}
