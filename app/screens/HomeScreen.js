@@ -30,8 +30,8 @@ export default function Home() {
 	const dailymodes = user.dailymodes
 	console.log('Home -> dailymodes', dailymodes)
 
-	// const mood = dailymodes.map((dailymode) => dailymode.mode)
-	// console.log('Home -> mood', mood)
+	const mood = dailymodes.map((dailymode) => dailymode.mode)
+	console.log('Home -> mood', mood)
 
 	const [refreshing, setRefreshing] = React.useState(false)
 	const onRefresh = React.useCallback(async () => {
@@ -62,13 +62,13 @@ export default function Home() {
 					// mood[5],
 					// mood[6],
 					// mood[7],
-					Math.random() * 5,
-					Math.random() * 5,
-					Math.random() * 5,
-					Math.random() * 5,
-					Math.random() * 5,
-					Math.random() * 5,
-					Math.random() * 5,
+					4,
+					2,
+					3,
+					4,
+					1,
+					4,
+					5,
 				],
 			},
 		],
