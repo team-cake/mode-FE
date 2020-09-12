@@ -18,36 +18,13 @@ import { styles } from '../styles/styles.js'
 import axios from 'axios'
 import { apiUrl } from '../config/constants'
 
-// let emojis = [
-// 	{
-// 		id: '1',
-// 		val: '🙁',
-// 	},
-// 	{
-// 		id: '2',
-// 		val: '😕',
-// 	},
-// 	{
-// 		id: '3',
-// 		val: '😐',
-// 	},
-// 	{
-// 		id: '4',
-// 		val: '🙂',
-// 	},
-// 	{
-// 		id: '5',
-// 		val: '😀',
-// 	},
-// ]
-
 export default function DailyMode() {
 	const [emoji, setEmoji] = useState('1')
 	const [comment, setComment] = useState('')
 	const [image, setImage] = useState('')
 	const [loading, setLoading] = useState(false)
 
-	const user = useSelector(selectUser)
+	const user = useSelector((state) => state.user.data)
 	console.log('DailyMode -> user', user)
 
 	const navigation = useNavigation()
