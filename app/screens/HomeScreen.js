@@ -85,12 +85,6 @@ export default function Home() {
 		dispatch(logOut())
 	}
 
-	useEffect(() => {
-		if (token === null) {
-			navigation.navigate('Login')
-		}
-	}, [token, navigation])
-
 	return (
 		<>
 			<View style={styles.center}>

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import store from './app/store'
 import { useFonts } from '@use-expo/font'
 import { AppLoading } from 'expo'
+import Navigation from './app/navigation'
 
 export default function App() {
 	const [isLoaded] = useFonts({
@@ -20,10 +21,7 @@ export default function App() {
 	} else {
 		return (
 			<Provider store={store}>
-				<NavigationContainer independent={true}>
-					{/* <AppNav /> */}
-					<AuthNav />
-				</NavigationContainer>
+				<Navigation />
 			</Provider>
 		)
 	}

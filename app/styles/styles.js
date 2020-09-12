@@ -6,6 +6,9 @@ export const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	fullWidth: {
+		width: 400,
+	},
 	formContainer: {},
 	center: {
 		flex: 1,
@@ -73,21 +76,21 @@ export const styles = StyleSheet.create({
 	},
 	textInputComment: {
 		height: 40,
-		width: '85%',
+		width: '100%',
 		borderColor: 'gray',
 		borderWidth: 1,
 		paddingLeft: 10,
 	},
 	textInputLogin: {
 		height: 40,
-		width: '50%',
+		width: '100%',
 		borderColor: 'gray',
 		borderWidth: 1,
 		paddingLeft: 10,
 	},
 	textInput: {
 		height: 40,
-		width: '85%',
+		width: '100%',
 		borderColor: 'gray',
 		borderWidth: 1,
 		paddingLeft: 10,
