@@ -10,7 +10,6 @@ import {
 } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { selectUser } from '../store/user/selector'
 
 import { emojis } from '../assets/modes'
 import { styles } from '../styles/styles.js'
@@ -18,42 +17,17 @@ import { styles } from '../styles/styles.js'
 import axios from 'axios'
 import { apiUrl } from '../config/constants'
 
-// let emojis = [
-// 	{
-// 		id: '1',
-// 		val: '🙁',
-// 	},
-// 	{
-// 		id: '2',
-// 		val: '😕',
-// 	},
-// 	{
-// 		id: '3',
-// 		val: '😐',
-// 	},
-// 	{
-// 		id: '4',
-// 		val: '🙂',
-// 	},
-// 	{
-// 		id: '5',
-// 		val: '😀',
-// 	},
-// ]
-
 export default function DailyMode() {
 	const [emoji, setEmoji] = useState('1')
 	const [comment, setComment] = useState('')
 	const [image, setImage] = useState('')
 	const [loading, setLoading] = useState(false)
 
-	const user = useSelector(selectUser)
-	console.log('DailyMode -> user', user)
+	const user = useSelector((state) => state.user.data)
 
 	const navigation = useNavigation()
 
 	async function onPressSend(mode, comment, image, userId) {
-		console.log('Starting')
 		setLoading(true)
 		await axios
 			.post(`${apiUrl}/dailymode`, {
@@ -67,8 +41,9 @@ export default function DailyMode() {
 				console.log('Error: ', e)
 			})
 		setLoading(false)
-		console.log('Ended')
-		navigation.navigate('AppNav')
+		setComment('')
+		setImage('')
+		navigation.navigate('Stats')
 	}
 
 	return (
@@ -110,7 +85,6 @@ export default function DailyMode() {
 								placeholder={'Comment'}
 								value={comment}
 								multiLine
-								// textAlignVertical='top'
 								onChangeText={(text) => {
 									setComment(text)
 								}}
