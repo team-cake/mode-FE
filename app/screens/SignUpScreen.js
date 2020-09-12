@@ -96,8 +96,7 @@ export default function SignUpScreen() {
 						style={styles.textInput}
 						onChangeText={(text) => setGithubLink(text)}
 						value={githubLink}
-						keyboardType='url'
-						placeholder='Github Link'
+						placeholder='Github Handle'
 					/>
 					<Button
 						title='Sign up'
