@@ -39,6 +39,9 @@ export default function ProfileScreen() {
 		fetchModes()
 	}, [])
 
+	const sortedModes = modes.reverse((a, b) => a.id - b.id)
+	console.log('ProfileScreen -> sortedModes', sortedModes)
+
 	const [refreshing, setRefreshing] = React.useState(false)
 	const onRefresh = React.useCallback(async () => {
 		setRefreshing(true)
@@ -62,7 +65,7 @@ export default function ProfileScreen() {
 					<Text style={styles.small}>mode</Text>
 
 					<Text style={styles.title}>Your Daily Modes</Text>
-					{modes.map((mode) => {
+					{sortedModes.map((mode) => {
 						return (
 							<ModeCard
 								key={mode.id}
