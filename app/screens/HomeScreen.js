@@ -15,12 +15,6 @@ import { logOut } from '../store/user/actions'
 import { selectToken, selectUser } from '../store/user/selector'
 import AppButton from '../Components/AppButton'
 
-const wait = (timeout) => {
-	return new Promise((resolve) => {
-		setTimeout(resolve, timeout)
-	})
-}
-
 export default function Home() {
 	const dispatch = useDispatch()
 	const navigation = useNavigation()
@@ -36,11 +30,12 @@ export default function Home() {
 	const [refreshing, setRefreshing] = React.useState(false)
 	const onRefresh = React.useCallback(async () => {
 		setRefreshing(true)
-
-		wait(2000).then(() => setRefreshing(false))
+		await fetchModes().catch((e) => {
+			console.log('async catch error: ', e)
+			setRefreshing(false)
+		})
+		setRefreshing(false)
 	}, [])
-
-	const [chartData, setChartData] = useState({})
 
 	const dataFirst = {
 		labels: [
