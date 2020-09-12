@@ -15,16 +15,32 @@ import {
 } from '../store/dailymode/actions'
 
 import ModeCard from '../Components/ModeCard'
-import Axios from 'axios'
+import axios from 'axios'
+import { apiUrl } from '../config/constants'
 
 export default function ProfileScreen() {
-	const dispatch = useDispatch()
-	const dailymodes = useSelector(selectDailymodes)
-	const user = useSelector(selectUser)
-
+	const user = useSelector((state) => state.user.data)
+	let [modes, setModes] = useState([])
+	async function fetchModes() {
+		if (user) {
+			const response = await axios
+				.get(`${apiUrl}/user/${user.id}`)
+				.catch((err) => {
+					console.log('catch err => ', err)
+				})
+			if (response.data.dailymodes) {
+				// Getting range of date for which graph is to build
+				let dailyModesFromDB = response.data.dailymodes
+				setModes(dailyModesFromDB)
+			}
+		}
+	}
 	useEffect(() => {
-		dispatch(fetchModes())
-	}, [dispatch])
+		fetchModes()
+	}, [])
+
+	const sortedModes = modes.reverse((a, b) => a.id - b.id)
+	console.log('ProfileScreen -> sortedModes', sortedModes)
 
 	const [refreshing, setRefreshing] = React.useState(false)
 	const onRefresh = React.useCallback(async () => {
@@ -49,18 +65,29 @@ export default function ProfileScreen() {
 					<Text style={styles.small}>mode</Text>
 
 					<Text style={styles.title}>Your Daily Modes</Text>
-					{/* {sortModes.map((sortmode) => {
+					{sortedModes.map((mode) => {
 						return (
 							<ModeCard
-								key={sortmode.id}
-								mode={sortmode.mode}
-								date={moment(sortmode.createdAt).format('MMM Do YYYY')}
-								image={sortmode.image}
-								comment={sortmode.comment}
-							>
-							</ModeCard>
+								key={mode.id}
+								mode={
+									mode.mode === 1
+										? '🙁'
+										: mode.mode === 2
+										? '😕'
+										: mode.mode === 3
+										? '😐'
+										: mode.mode === 4
+										? '🙂'
+										: mode.mode === 5
+										? '😀'
+										: ''
+								}
+								date={moment(mode.createdAt).format('MMM Do YYYY')}
+								image={mode.image}
+								comment={mode.comment}
+							></ModeCard>
 						)
-					})} */}
+					})}
 				</View>
 			</ScrollView>
 		</>
