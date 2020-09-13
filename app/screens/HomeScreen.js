@@ -14,18 +14,76 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../store/user/actions'
 import { selectToken, selectUser } from '../store/user/selector'
 import AppButton from '../Components/AppButton'
+import axios from 'axios'
+import { apiUrl } from '../config/constants'
+
+Object.size = function (obj) {
+	let size = 0,
+		key
+	for (key in obj) {
+		if (obj.hasOwnProperty(key)) size++
+	}
+	return size
+}
 
 export default function Home() {
 	const dispatch = useDispatch()
 	const navigation = useNavigation()
-	const token = useSelector(selectToken)
-	const user = useSelector(selectUser)
-	console.log('Home -> user', user)
-	const dailymodes = user.dailymodes
-	console.log('Home -> dailymodes', dailymodes)
-
-	// const mood = dailymodes.map((dailymode) => dailymode.mode)
-	// console.log('Home -> mood', mood)
+	const user = useSelector((state) => state.user.data)
+	let [modes, setModes] = useState([0])
+	async function fetchModes() {
+		if (user) {
+			const response = await axios
+				.get(`${apiUrl}/user/${user.id}`)
+				.catch((err) => {
+					console.log('catch err => ', err)
+				})
+			if (response.data.dailymodes) {
+				// Getting range of date for which graph is to build
+				let dailyModesFromDB = response.data.dailymodes
+				console.log('fetchModes -> dailyModesFromDB', dailyModesFromDB)
+				let dateRange = []
+				for (let i = 0; i < 7; i++) {
+					dateRange.push(moment().subtract(i, 'd').format('YMD'))
+				}
+				// Getting all mood values for the selected range
+				let allModes = {}
+				for (let i = 0; i < 7; i++) {
+					allModes[dateRange[i]] = dailyModesFromDB.map((m) => {
+						let modeDate = moment(m.createdAt).format('YMD')
+						if (dateRange[i] === modeDate) {
+							return m.mode
+						} else {
+							return 0
+						}
+					})
+				}
+				console.log('fetchModes -> allModes', allModes)
+				let length = Object.size(allModes)
+				for (let i = 0; i < length; i++) {
+					let j = 0
+					let total = allModes[dateRange[i]].reduce((total, num) => {
+						j++
+						return total + num
+					})
+					allModes[dateRange[i]] = total / j
+				}
+				let keysSorted = Object.keys(allModes).sort((a, b) => {
+					console.log('fetchModes -> keysSorted', keysSorted)
+					return allModes[a] - allModes[b]
+				})
+				let newArr = []
+				console.log('fetchModes -> newArr', newArr)
+				for (let i = 0; i < keysSorted.length; i++) {
+					newArr.push(allModes[keysSorted[i]])
+				}
+				setModes(newArr)
+			}
+		}
+	}
+	useEffect(() => {
+		fetchModes()
+	}, [])
 
 	const [refreshing, setRefreshing] = React.useState(false)
 	const onRefresh = React.useCallback(async () => {
@@ -49,9 +107,8 @@ export default function Home() {
 		],
 		datasets: [
 			{
-				data:
-					// mood,
-					[4, 2, 3, 4, 1, 2, 5],
+				data: modes,
+				// [4, 2, 3, 4, 1, 2, 5],
 			},
 		],
 	}
@@ -111,11 +168,13 @@ export default function Home() {
 						width={Dimensions.get('window').width}
 						height={220}
 						yAxisInterval={1}
+						fromZero={true}
+						segments={5}
 						chartConfig={{
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
 							backgroundGradientTo: '#08130D',
-							decimalPlaces: 2,
+							// decimalPlaces: 2,
 							color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							style: {
@@ -139,6 +198,8 @@ export default function Home() {
 						width={Dimensions.get('window').width}
 						height={220}
 						yAxisInterval={1}
+						fromZero={true}
+						segments={5}
 						chartConfig={{
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
