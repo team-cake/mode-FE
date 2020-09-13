@@ -9,14 +9,15 @@ import DatePicker from '@react-native-community/datetimepicker'
 import { styles } from '../styles/styles.js'
 import axios from 'axios'
 import { apiUrl } from '../config/constants'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function SignUpScreen() {
-	const [firstName, setFirstName] = useState('elo')
-	const [lastName, setLastName] = useState('elo')
-	const [email, setEmail] = useState('elo@elo.com')
-	const [password, setPassword] = useState('elo')
-	const [dateOfBirth, setDateOfBirth] = useState('1990-01-02')
-	const [githubLink, setGithubLink] = useState('elo')
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [dateOfBirth, setDateOfBirth] = useState('')
+	const [githubLink, setGithubLink] = useState('') // this should be github handle, not url
 	const [showError, setShowError] = useState('')
 	const [loading, setLoading] = useState(false)
 	const dispatch = useDispatch()
@@ -63,90 +64,97 @@ export default function SignUpScreen() {
 
 	return (
 		<>
-			<View style={styles.center}>
-				<Image source={require('../assets/mode_logo.png')} />
-				<View style={{ height: 20 }} />
-				<View style={{ width: 250 }}>
-					<Text style={styles.title}>signup</Text>
-					<TextInput
-						style={styles.textInput}
-						onChangeText={(text) => setFirstName(text)}
-						value={firstName}
-						keyboardType='default'
-						placeholder='First Name'
-					/>
-					<View style={{ height: 10 }} />
-					<TextInput
-						style={styles.textInput}
-						onChangeText={(text) => setLastName(text)}
-						value={lastName}
-						keyboardType='default'
-						placeholder='Last Name'
-					/>
-					<View style={{ height: 10 }} />
-
-					<TextInput
-						style={styles.textInput}
-						onChangeText={(text) => setEmail(text)}
-						value={email}
-						autoCapitalize='none'
-						autoCorrect={false}
-						keyboardType='email-address'
-						placeholder='Email'
-					/>
-					<View style={{ height: 10 }} />
-
-					<TextInput
-						secureTextEntry={true}
-						style={styles.textInput}
-						onChangeText={(text) => setPassword(text)}
-						value={password}
-						autoCapitalize='none'
-						autoCorrect={false}
-						secureTextEntry={true}
-						placeholder='Password'
-					/>
-					<View style={{ height: 10 }} />
-
-					<TextInput
-						style={styles.textInput}
-						onChangeText={(text) => setDateOfBirth(text)}
-						value={dateOfBirth}
-						keyboardType='number-pad'
-						placeholder='DOB - YYYY-MM-DD'
-					/>
-					<View style={{ height: 10 }} />
-
-					<TextInput
-						style={styles.textInput}
-						onChangeText={(text) => setGithubLink(text)}
-						value={githubLink}
-						placeholder='Github Handle'
-					/>
-					<View style={{ height: 5 }} />
-					<View style={{ height: 10 }}>
-						{showError.length > 0 && (
-							<Text style={{ color: 'red', fontSize: 12, textAlign: 'center' }}>
-								{showError}
-							</Text>
-						)}
-					</View>
+			<KeyboardAwareScrollView>
+				<View style={styles.center}>
+					<View style={{ height: 50 }} />
+					<Image source={require('../assets/mode_logo.png')} />
 					<View style={{ height: 20 }} />
-					<Button
-						title={loading ? 'Loading...' : 'Sign up'}
-						onPress={() =>
-							onPress(
-								firstName,
-								lastName,
-								email,
-								password,
-								dateOfBirth,
-								githubLink
-							)
-						}
-					/>
+					<View style={{ width: 250 }}>
+						<Text style={styles.title}>signup</Text>
+						<TextInput
+							style={styles.textInput}
+							onChangeText={(text) => setFirstName(text)}
+							value={firstName}
+							keyboardType='default'
+							placeholder='First Name'
+						/>
+						<View style={{ height: 10 }} />
+						<TextInput
+							style={styles.textInput}
+							onChangeText={(text) => setLastName(text)}
+							value={lastName}
+							keyboardType='default'
+							placeholder='Last Name'
+						/>
+						<View style={{ height: 10 }} />
+
+						<TextInput
+							style={styles.textInput}
+							onChangeText={(text) => setEmail(text)}
+							value={email}
+							autoCapitalize='none'
+							autoCorrect={false}
+							keyboardType='email-address'
+							placeholder='Email'
+						/>
+						<View style={{ height: 10 }} />
+
+						<TextInput
+							secureTextEntry={true}
+							style={styles.textInput}
+							onChangeText={(text) => setPassword(text)}
+							value={password}
+							autoCapitalize='none'
+							autoCorrect={false}
+							secureTextEntry={true}
+							placeholder='Password'
+						/>
+						<View style={{ height: 10 }} />
+
+						<TextInput
+							style={styles.textInput}
+							onChangeText={(text) => setDateOfBirth(text)}
+							value={dateOfBirth}
+							keyboardType='number-pad'
+							placeholder='DOB - YYYY-MM-DD'
+						/>
+						<View style={{ height: 10 }} />
+
+						<TextInput
+							style={styles.textInput}
+							onChangeText={(text) => setGithubLink(text)}
+							value={githubLink}
+							placeholder='Github Handle'
+						/>
+						<View style={{ height: 5 }} />
+						<View style={{ height: 10 }}>
+							{showError.length > 0 && (
+								<Text
+									style={{ color: 'red', fontSize: 12, textAlign: 'center' }}
+								>
+									{showError}
+								</Text>
+							)}
+						</View>
+						<View style={{ height: 20 }} />
+						<Button
+							title={loading ? 'Loading...' : 'Sign up'}
+							onPress={() =>
+								onPress(
+									firstName,
+									lastName,
+									email,
+									password,
+									dateOfBirth,
+									githubLink
+								)
+							}
+						/>
+						<View style={{ height: 20 }} />
+						<View style={{ height: 20 }} />
+					</View>
 				</View>
-			</View>
+			</KeyboardAwareScrollView>
 		</>
 	)
 }

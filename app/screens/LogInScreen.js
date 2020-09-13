@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
 import { Text, View, Image, TextInput, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -46,7 +45,6 @@ export default function LogInScreen() {
 	return (
 		<>
 			<View style={styles.center}>
-				<StatusBar setHidden={true} />
 				<Image source={require('../assets/mode_logo.png')} />
 				<View style={{ height: 20 }} />
 				<View style={{ width: 250 }}>

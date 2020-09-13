@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
 	Button,
 	SafeAreaView,
-	StatusBar,
 	Text,
 	View,
 	TextInput,
@@ -49,7 +48,6 @@ export default function DailyMode() {
 	return (
 		<>
 			<SafeAreaView style={{ flex: 1 }}>
-				<StatusBar />
 				<Text style={styles.small}>mode</Text>
 
 				<View style={styles.container}>
