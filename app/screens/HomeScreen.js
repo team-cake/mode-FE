@@ -60,17 +60,27 @@ export default function Home() {
 						}
 					})
 				}
-				console.log('fetchModes -> allModes', allModes)
+				// console.log('fetchModes -> allModes', allModes)
 				let length = Object.size(allModes)
-				console.log('fetchModes -> length', length)
+				// console.log('fetchModes -> length', length)
 				for (let i = 0; i < length; i++) {
-					let j = 0
+					let j = 1
 					let total = allModes[dateRange[i]].reduce((total, num) => {
 						j++
 						return total + num
 					})
-					allModes[dateRange[i]] = total / j
+					if (total === 0) {
+						allModes[dateRange[i]] = 0
+					} else {
+						let cal = total / j
+						cal = Math.ceil(cal)
+						if (cal > 5) {
+							cal = 5
+						}
+						allModes[dateRange[i]] = cal
+					}
 				}
+				console.log('fetchModes -> allModes', allModes)
 				let keysSorted = Object.keys(allModes).sort((a, b) => {
 					console.log('fetchModes -> keysSorted', keysSorted)
 					return allModes[a] - allModes[b]
@@ -111,7 +121,6 @@ export default function Home() {
 		datasets: [
 			{
 				data: modes,
-				// [4, 2, 3, 4, 1, 2, 5],
 			},
 		],
 	}
@@ -149,7 +158,6 @@ export default function Home() {
 		<>
 			<View style={styles.center}>
 				<ScrollView
-					// contentContainerStyle={styles.scrollView}
 					refreshControl={
 						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
 					}
@@ -170,8 +178,8 @@ export default function Home() {
 						yAxisInterval={1}
 						fromZero={true}
 						segments={5}
-						// yAxisLabel='ok'
-						// yAxisSuffix='ok'
+						// yAxisLabel='super'
+						// yAxisSuffix='ja'
 						renderDotContent={({ x, y, index }) => {
 							if (modes.length) {
 								let n = modes[index]
@@ -224,7 +232,7 @@ export default function Home() {
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
 							backgroundGradientTo: '#08130D',
-							// decimalPlaces: 2,
+							decimalPlaces: null,
 							color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							style: {
@@ -243,7 +251,7 @@ export default function Home() {
 						}}
 					/>
 					<Text style={styles.small}>Your mode history</Text>
-					<LineChart
+					{/* <LineChart
 						data={dataSec}
 						width={Dimensions.get('window').width}
 						height={220}
@@ -254,7 +262,7 @@ export default function Home() {
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
 							backgroundGradientTo: '#08130D',
-							// decimalPlaces: 2,
+							decimalPlaces: null,
 							color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							style: {
@@ -272,7 +280,7 @@ export default function Home() {
 							borderRadius: 16,
 						}}
 					/>
-					<Text style={styles.small}>Your lines of code per day</Text>
+					<Text style={styles.small}>Your lines of code per day</Text> */}
 				</ScrollView>
 			</View>
 		</>
