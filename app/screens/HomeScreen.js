@@ -14,6 +14,7 @@ import { logOut } from '../store/user/actions'
 import AppButton from '../Components/AppButton'
 import axios from 'axios'
 import { apiUrl } from '../config/constants'
+import ModePreview from '../Components/ModePreview'
 
 Object.size = function (obj) {
 	let size = 0,
@@ -28,10 +29,7 @@ export default function Home() {
 	const dispatch = useDispatch()
 	const user = useSelector((state) => state.user.data)
 	let [modes, setModes] = useState([0])
-
-	useEffect(() => {
-		fetchModes()
-	}, [])
+	let [dailyModes, setDailyModes] = useState([])
 
 	async function fetchModes() {
 		if (user) {
@@ -98,10 +96,35 @@ export default function Home() {
 		fetchModes()
 	}, [])
 
+	const sortedModes = dailyModes.reverse((a, b) => a.id - b.id)
+	console.log('ProfileScreen -> sortedModes', sortedModes)
+
+	async function fetchDailyModes() {
+		if (user) {
+			const response = await axios
+				.get(`${apiUrl}/user/${user.id}`)
+				.catch((err) => {
+					console.log('catch err => ', err)
+				})
+			if (response.data.dailymodes) {
+				// Getting range of date for which graph is to build
+				let dailyModesFromDB = response.data.dailymodes
+				setDailyModes(dailyModesFromDB)
+			}
+		}
+	}
+	useEffect(() => {
+		fetchDailyModes()
+	}, [])
+
 	const [refreshing, setRefreshing] = React.useState(false)
 	const onRefresh = React.useCallback(async () => {
 		setRefreshing(true)
 		await fetchModes().catch((e) => {
+			console.log('async catch error: ', e)
+			setRefreshing(false)
+		})
+		await fetchDailyModes().catch((e) => {
 			console.log('async catch error: ', e)
 			setRefreshing(false)
 		})
@@ -125,30 +148,30 @@ export default function Home() {
 		],
 	}
 
-	const dataSec = {
-		labels: [
-			moment().subtract(6, 'd').format('MMM Do'),
-			moment().subtract(5, 'd').format('MMM Do'),
-			moment().subtract(4, 'd').format('MMM Do'),
-			moment().subtract(3, 'd').format('MMM Do'),
-			moment().subtract(2, 'd').format('MMM Do'),
-			moment().subtract(1, 'd').format('MMM Do'),
-			moment().format('MMM Do'),
-		],
-		datasets: [
-			{
-				data: [
-					Math.random() * 250,
-					Math.random() * 250,
-					Math.random() * 250,
-					Math.random() * 250,
-					Math.random() * 250,
-					Math.random() * 250,
-					Math.random() * 250,
-				],
-			},
-		],
-	}
+	// const dataSec = {
+	// 	labels: [
+	// 		moment().subtract(6, 'd').format('MMM Do'),
+	// 		moment().subtract(5, 'd').format('MMM Do'),
+	// 		moment().subtract(4, 'd').format('MMM Do'),
+	// 		moment().subtract(3, 'd').format('MMM Do'),
+	// 		moment().subtract(2, 'd').format('MMM Do'),
+	// 		moment().subtract(1, 'd').format('MMM Do'),
+	// 		moment().format('MMM Do'),
+	// 	],
+	// 	datasets: [
+	// 		{
+	// 			data: [
+	// 				Math.random() * 250,
+	// 				Math.random() * 250,
+	// 				Math.random() * 250,
+	// 				Math.random() * 250,
+	// 				Math.random() * 250,
+	// 				Math.random() * 250,
+	// 				Math.random() * 250,
+	// 			],
+	// 		},
+	// 	],
+	// }
 
 	function onPress() {
 		dispatch(logOut())
@@ -251,6 +274,31 @@ export default function Home() {
 						}}
 					/>
 					<Text style={styles.small}>Your mode history</Text>
+					<View style={{ height: 20 }} />
+
+					{sortedModes.map((mode) => {
+						return (
+							<ModePreview
+								key={mode.id}
+								mode={
+									mode.mode === 1
+										? '🙁'
+										: mode.mode === 2
+										? '😕'
+										: mode.mode === 3
+										? '😐'
+										: mode.mode === 4
+										? '🙂'
+										: mode.mode === 5
+										? '😀'
+										: ''
+								}
+								date={moment(mode.createdAt).format('MMM Do YYYY')}
+								image={mode.image}
+								comment={mode.comment}
+							/>
+						)
+					})}
 					{/* <LineChart
 						data={dataSec}
 						width={Dimensions.get('window').width}
