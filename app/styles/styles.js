@@ -111,6 +111,12 @@ export const styles = StyleSheet.create({
 		marginVertical: 6,
 		width: '75%',
 	},
+	headerCard: {
+		fontFamily: 'Roboto-Medium',
+		fontSize: 25,
+		marginBottom: 1,
+		textAlign: 'center',
+	},
 	cardContent: {
 		marginHorizontal: 18,
 		marginVertical: 20,
