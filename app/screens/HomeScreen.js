@@ -9,10 +9,8 @@ import {
 	Dimensions,
 	RefreshControl,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../store/user/actions'
-import { selectToken, selectUser } from '../store/user/selector'
 import AppButton from '../Components/AppButton'
 import axios from 'axios'
 import { apiUrl } from '../config/constants'
@@ -28,15 +26,19 @@ Object.size = function (obj) {
 
 export default function Home() {
 	const dispatch = useDispatch()
-	const navigation = useNavigation()
 	const user = useSelector((state) => state.user.data)
 	let [modes, setModes] = useState([0])
+
+	useEffect(() => {
+		fetchModes()
+	}, [])
+
 	async function fetchModes() {
 		if (user) {
 			const response = await axios
 				.get(`${apiUrl}/user/${user.id}`)
 				.catch((err) => {
-					console.log('catch err => ', err)
+					// console.log('catch err => ', err)
 				})
 			if (response.data.dailymodes) {
 				// Getting range of date for which graph is to build
@@ -58,16 +60,27 @@ export default function Home() {
 						}
 					})
 				}
-				console.log('fetchModes -> allModes', allModes)
+				// console.log('fetchModes -> allModes', allModes)
 				let length = Object.size(allModes)
+				// console.log('fetchModes -> length', length)
 				for (let i = 0; i < length; i++) {
-					let j = 0
+					let j = 1
 					let total = allModes[dateRange[i]].reduce((total, num) => {
 						j++
 						return total + num
 					})
-					allModes[dateRange[i]] = total / j
+					if (total === 0) {
+						allModes[dateRange[i]] = 0
+					} else {
+						let cal = total / j
+						cal = Math.ceil(cal)
+						if (cal > 5) {
+							cal = 5
+						}
+						allModes[dateRange[i]] = cal
+					}
 				}
+				console.log('fetchModes -> allModes', allModes)
 				let keysSorted = Object.keys(allModes).sort((a, b) => {
 					console.log('fetchModes -> keysSorted', keysSorted)
 					return allModes[a] - allModes[b]
@@ -108,7 +121,6 @@ export default function Home() {
 		datasets: [
 			{
 				data: modes,
-				// [4, 2, 3, 4, 1, 2, 5],
 			},
 		],
 	}
@@ -146,7 +158,6 @@ export default function Home() {
 		<>
 			<View style={styles.center}>
 				<ScrollView
-					// contentContainerStyle={styles.scrollView}
 					refreshControl={
 						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
 					}
@@ -160,9 +171,6 @@ export default function Home() {
 					<Text style={styles.small}>
 						Current Time: {moment().format('LT')}{' '}
 					</Text>
-					{/* <AppButton title='Day' />
-					<AppButton title='Week' />
-					<AppButton title='Month' /> */}
 					<LineChart
 						data={dataFirst}
 						width={Dimensions.get('window').width}
@@ -170,11 +178,61 @@ export default function Home() {
 						yAxisInterval={1}
 						fromZero={true}
 						segments={5}
+						// yAxisLabel='super'
+						// yAxisSuffix='ja'
+						renderDotContent={({ x, y, index }) => {
+							if (modes.length) {
+								let n = modes[index]
+								if (n === 1) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											🙁
+										</Text>
+									)
+								} else if (n === 2) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											😕
+										</Text>
+									)
+								} else if (n === 3) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											😐
+										</Text>
+									)
+								} else if (n === 4) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											🙂
+										</Text>
+									)
+								} else if (n === 5) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											😀
+										</Text>
+									)
+								}
+							}
+						}}
+						withHorizontalLabels={true}
+						withVerticalLabels={true}
 						chartConfig={{
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
 							backgroundGradientTo: '#08130D',
-							// decimalPlaces: 2,
+							decimalPlaces: null,
 							color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							style: {
@@ -193,7 +251,7 @@ export default function Home() {
 						}}
 					/>
 					<Text style={styles.small}>Your mode history</Text>
-					<LineChart
+					{/* <LineChart
 						data={dataSec}
 						width={Dimensions.get('window').width}
 						height={220}
@@ -204,7 +262,7 @@ export default function Home() {
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
 							backgroundGradientTo: '#08130D',
-							// decimalPlaces: 2,
+							decimalPlaces: null,
 							color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 							style: {
@@ -222,7 +280,7 @@ export default function Home() {
 							borderRadius: 16,
 						}}
 					/>
-					<Text style={styles.small}>Your lines of code per day</Text>
+					<Text style={styles.small}>Your lines of code per day</Text> */}
 				</ScrollView>
 			</View>
 		</>

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, Image, TextInput, Button } from 'react-native'
+import React, { useState } from 'react'
+import { Text, StatusBar, View, Image, TextInput, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginSuccess } from '../store/user/actions'
-import { selectToken, selectUser } from '../store/user/selector'
 
 import { styles } from '../styles/styles.js'
 import axios from 'axios'
@@ -45,6 +44,7 @@ export default function LogInScreen() {
 	return (
 		<>
 			<View style={styles.center}>
+				<StatusBar setHidden={true} />
 				<Image source={require('../assets/mode_logo.png')} />
 				<View style={{ height: 20 }} />
 				<View style={{ width: 250 }}>
