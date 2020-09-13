@@ -1,15 +1,12 @@
 import React from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { Image } from 'react-native'
 import {
 	Container,
-	Header,
 	Content,
 	Card,
 	CardItem,
-	Thumbnail,
 	Text,
 	Button,
-	Icon,
 	Left,
 	Body,
 } from 'native-base'
