@@ -17,7 +17,7 @@ import axios from 'axios'
 import { apiUrl } from '../config/constants'
 
 export default function DailyMode() {
-	const [emoji, setEmoji] = useState('1')
+	const [emoji, setEmoji] = useState('')
 	const [comment, setComment] = useState('')
 	const [image, setImage] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -49,10 +49,8 @@ export default function DailyMode() {
 		<>
 			<SafeAreaView style={{ flex: 1 }}>
 				<Text style={styles.small}>mode</Text>
-
 				<View style={styles.container}>
 					<Text style={styles.header}>What is your mode today?</Text>
-
 					<View style={styles.formContainer}>
 						<View style={styles.emojiContainer}>
 							{emojis.map((e) => {
@@ -78,9 +76,14 @@ export default function DailyMode() {
 							})}
 						</View>
 						<View>
+							<Text style={styles.tinySmall}>
+								Choose an emoji that fits your current mode
+							</Text>
+							<View style={{ height: 21 }} />
+
 							<TextInput
 								style={styles.textInputComment}
-								placeholder={'Comment'}
+								placeholder={'Comment about your mood'}
 								value={comment}
 								multiLine
 								onChangeText={(text) => {
@@ -90,9 +93,10 @@ export default function DailyMode() {
 							<View style={{ height: 21 }} />
 							<TextInput
 								style={styles.textInput}
-								placeholder={'Image URL'}
+								placeholder={'Enter image URL to rep your mood'}
 								value={image}
 								keyboardType='url'
+								autoCapitalize='none'
 								onChangeText={(text) => {
 									setImage(text)
 									console.log('')
