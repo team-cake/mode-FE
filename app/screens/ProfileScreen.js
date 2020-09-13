@@ -11,9 +11,11 @@ import { apiUrl } from '../config/constants'
 
 export default function ProfileScreen() {
 	const user = useSelector((state) => state.user.data)
-	let [modes, setModes] = useState([])
+	let [dailyModes, setDailyModes] = useState([])
 
-	async function fetchModes() {
+	const sortedModes = dailyModes.reverse((a, b) => a.id - b.id)
+
+	async function fetchDailyModes() {
 		if (user) {
 			const response = await axios
 				.get(`${apiUrl}/user/${user.id}`)
@@ -23,26 +25,29 @@ export default function ProfileScreen() {
 			if (response.data.dailymodes) {
 				// Getting range of date for which graph is to build
 				let dailyModesFromDB = response.data.dailymodes
-				setModes(dailyModesFromDB)
+				setDailyModes(dailyModesFromDB)
 			}
 		}
 	}
 	useEffect(() => {
-		fetchModes()
+		fetchDailyModes()
 	}, [])
 
-	const sortedModes = modes.reverse((a, b) => a.id - b.id)
-	console.log('ProfileScreen -> sortedModes', sortedModes)
+	// sortedModes.sort(function(x, y) {
+	// 	dailyModes.reverse((a, b) => a.id - b.id)
+	// })
 
 	const [refreshing, setRefreshing] = React.useState(false)
 	const onRefresh = React.useCallback(async () => {
 		setRefreshing(true)
-		await fetchModes().catch((e) => {
+		await fetchDailyModes().catch((e) => {
 			console.log('async catch error: ', e)
 			setRefreshing(false)
 		})
 		setRefreshing(false)
 	}, [])
+
+	// console.log('ProfileScreen -> sortedModes', sortedModes)
 
 	return (
 		<>
@@ -53,6 +58,7 @@ export default function ProfileScreen() {
 			>
 				<Text style={styles.small}>mode</Text>
 				<Text style={styles.title}>Your Daily Modes</Text>
+
 				{sortedModes.map((mode) => {
 					return (
 						<ModeCard
@@ -76,6 +82,7 @@ export default function ProfileScreen() {
 						></ModeCard>
 					)
 				})}
+				<View style={{ height: 21 }} />
 				<Text style={styles.small}>You have reached the end of your feed!</Text>
 			</ScrollView>
 		</>
