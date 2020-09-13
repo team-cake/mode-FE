@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { Text, View, ScrollView, RefreshControl } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectToken, selectUser } from '../store/user/selector'
-import {
-	selectDailymodes,
-	selectDailymodeUserId,
-} from '../store/dailymode/selector'
+import { useSelector } from 'react-redux'
 
 import { styles } from '../styles/styles.js'
-import {
-	// fetchDailyModes
-	fetchModes,
-} from '../store/dailymode/actions'
 
 import ModeCard from '../Components/ModeCard'
 import axios from 'axios'
@@ -21,6 +12,7 @@ import { apiUrl } from '../config/constants'
 export default function ProfileScreen() {
 	const user = useSelector((state) => state.user.data)
 	let [modes, setModes] = useState([])
+
 	async function fetchModes() {
 		if (user) {
 			const response = await axios
@@ -59,36 +51,32 @@ export default function ProfileScreen() {
 					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
 				}
 			>
-				<View
-				// style={styles.center}
-				>
-					<Text style={styles.small}>mode</Text>
-
-					<Text style={styles.title}>Your Daily Modes</Text>
-					{sortedModes.map((mode) => {
-						return (
-							<ModeCard
-								key={mode.id}
-								mode={
-									mode.mode === 1
-										? '🙁'
-										: mode.mode === 2
-										? '😕'
-										: mode.mode === 3
-										? '😐'
-										: mode.mode === 4
-										? '🙂'
-										: mode.mode === 5
-										? '😀'
-										: ''
-								}
-								date={moment(mode.createdAt).format('MMM Do YYYY')}
-								image={mode.image}
-								comment={mode.comment}
-							></ModeCard>
-						)
-					})}
-				</View>
+				<Text style={styles.small}>mode</Text>
+				<Text style={styles.title}>Your Daily Modes</Text>
+				{sortedModes.map((mode) => {
+					return (
+						<ModeCard
+							key={mode.id}
+							mode={
+								mode.mode === 1
+									? '🙁'
+									: mode.mode === 2
+									? '😕'
+									: mode.mode === 3
+									? '😐'
+									: mode.mode === 4
+									? '🙂'
+									: mode.mode === 5
+									? '😀'
+									: ''
+							}
+							date={moment(mode.createdAt).format('MMM Do YYYY')}
+							image={mode.image}
+							comment={mode.comment}
+						></ModeCard>
+					)
+				})}
+				<Text style={styles.small}>You have reached the end of your feed!</Text>
 			</ScrollView>
 		</>
 	)
