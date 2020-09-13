@@ -17,12 +17,17 @@ import { styles } from '../styles/styles.js'
 export default function Showmodes({ mode, date, image, comment }) {
 	return (
 		<>
-			<Container>
+			<Container
+				style={{
+					height: 475,
+					backgroundColor: 'grey',
+				}}
+			>
 				<Content>
 					<Card style={{ flex: 1 }}>
 						<CardItem>
 							<Left>
-								<Text style={styles.text}>Mood: {mode} </Text>
+								<Text style={styles.headerCard}>Mode: {mode} </Text>
 								<Body>
 									<Text note> - date: {date}</Text>
 								</Body>
@@ -32,19 +37,25 @@ export default function Showmodes({ mode, date, image, comment }) {
 							<Body>
 								<Image
 									source={{ uri: image }}
-									style={{ height: 300, width: 300, flex: 1 }}
+									style={{
+										height: 300,
+										width: 300,
+										flex: 1,
+										marginBottom: 5,
+									}}
 								/>
-								<Text style={styles.medium}>comment: {comment}</Text>
+								<Text style={styles.tinySmall}>comment: </Text>
+								<Text>{comment}</Text>
 							</Body>
 						</CardItem>
-						<Button>
+						{/* <Button>
 							<CardItem>
 								<Left>
 									<MaterialCommunityIcons name='update' />
 									<Text style={styles.tinySmall}>update your mode</Text>
 								</Left>
 							</CardItem>
-						</Button>
+						</Button> */}
 					</Card>
 				</Content>
 			</Container>
