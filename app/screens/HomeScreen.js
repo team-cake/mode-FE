@@ -9,10 +9,8 @@ import {
 	Dimensions,
 	RefreshControl,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../store/user/actions'
-import { selectToken, selectUser } from '../store/user/selector'
 import AppButton from '../Components/AppButton'
 import axios from 'axios'
 import { apiUrl } from '../config/constants'
@@ -28,15 +26,19 @@ Object.size = function (obj) {
 
 export default function Home() {
 	const dispatch = useDispatch()
-	const navigation = useNavigation()
 	const user = useSelector((state) => state.user.data)
 	let [modes, setModes] = useState([0])
+
+	useEffect(() => {
+		fetchModes()
+	}, [])
+
 	async function fetchModes() {
 		if (user) {
 			const response = await axios
 				.get(`${apiUrl}/user/${user.id}`)
 				.catch((err) => {
-					console.log('catch err => ', err)
+					// console.log('catch err => ', err)
 				})
 			if (response.data.dailymodes) {
 				// Getting range of date for which graph is to build
@@ -60,6 +62,7 @@ export default function Home() {
 				}
 				console.log('fetchModes -> allModes', allModes)
 				let length = Object.size(allModes)
+				console.log('fetchModes -> length', length)
 				for (let i = 0; i < length; i++) {
 					let j = 0
 					let total = allModes[dateRange[i]].reduce((total, num) => {
@@ -160,9 +163,6 @@ export default function Home() {
 					<Text style={styles.small}>
 						Current Time: {moment().format('LT')}{' '}
 					</Text>
-					{/* <AppButton title='Day' />
-					<AppButton title='Week' />
-					<AppButton title='Month' /> */}
 					<LineChart
 						data={dataFirst}
 						width={Dimensions.get('window').width}
@@ -170,6 +170,56 @@ export default function Home() {
 						yAxisInterval={1}
 						fromZero={true}
 						segments={5}
+						// yAxisLabel='ok'
+						// yAxisSuffix='ok'
+						renderDotContent={({ x, y, index }) => {
+							if (modes.length) {
+								let n = modes[index]
+								if (n === 1) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											🙁
+										</Text>
+									)
+								} else if (n === 2) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											😕
+										</Text>
+									)
+								} else if (n === 3) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											😐
+										</Text>
+									)
+								} else if (n === 4) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											🙂
+										</Text>
+									)
+								} else if (n === 5) {
+									return (
+										<Text
+											style={{ position: 'absolute', left: x - 8, top: y - 10 }}
+										>
+											😀
+										</Text>
+									)
+								}
+							}
+						}}
+						withHorizontalLabels={true}
+						withVerticalLabels={true}
 						chartConfig={{
 							backgroundColor: '#000000',
 							backgroundGradientFrom: '#1E2923',
