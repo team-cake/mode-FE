@@ -33,8 +33,8 @@ I hope this app will help them a little bit.
 
 ## Images
 
-![splashscreen](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/login.gif)
-![login](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/signup.gif)  
+![login](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/inlog.gif)
+![signup](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/signup.gif)  
 ![adddailymode](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/firstdailymode.gif)
 ![dailymode](https://github.com/team-cake/mode-FE/blob/development/app/assets/gif/dailymodes.gif)  
 
