@@ -13,7 +13,7 @@ export default function ProfileScreen() {
 	const user = useSelector((state) => state.user.data)
 	let [dailyModes, setDailyModes] = useState([])
 
-	const sortedModes = dailyModes.reverse((a, b) => a.id - b.id)
+	// const sortedModes = dailyModes.reverse((a, b) => a.id - b.id)
 
 	async function fetchDailyModes() {
 		if (user) {
@@ -25,10 +25,33 @@ export default function ProfileScreen() {
 			if (response.data.dailymodes) {
 				// Getting range of date for which graph is to build
 				let dailyModesFromDB = response.data.dailymodes
-				setDailyModes(dailyModesFromDB)
+				console.log('dailyModesFromDB => ', dailyModesFromDB)
+				let sortedArray = dailyModesFromDB.sort((a, b) => {
+					if (a.createdAt < b.createdAt) {
+						return 1
+					} else {
+						return -1
+					}
+				})
+				console.log('sortedArray => ', sortedArray)
+				setDailyModes(sortedArray)
 			}
 		}
 	}
+	// async function fetchDailyModes() {
+	// 	if (user) {
+	// 		const response = await axios
+	// 			.get(`${apiUrl}/user/${user.id}`)
+	// 			.catch((err) => {
+	// 				console.log('catch err => ', err)
+	// 			})
+	// 		if (response.data.dailymodes) {
+	// 			// Getting range of date for which graph is to build
+	// 			let dailyModesFromDB = response.data.dailymodes
+	// 			setDailyModes(dailyModesFromDB)
+	// 		}
+	// 	}
+	// }
 	useEffect(() => {
 		fetchDailyModes()
 	}, [])
@@ -59,7 +82,7 @@ export default function ProfileScreen() {
 				<Text style={styles.small}>mode</Text>
 				<Text style={styles.title}>Your Daily Modes</Text>
 
-				{sortedModes.map((mode) => {
+				{dailyModes.map((mode) => {
 					return (
 						<ModeCard
 							key={mode.id}

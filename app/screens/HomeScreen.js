@@ -36,20 +36,20 @@ export default function Home() {
 			const response = await axios
 				.get(`${apiUrl}/user/${user.id}`)
 				.catch((err) => {
-					// console.log('catch err => ', err)
+					// console.log("catch err => ", err);
 				})
 			if (response.data.dailymodes) {
 				// Getting range of date for which graph is to build
 				let dailyModesFromDB = response.data.dailymodes
-				console.log('fetchModes -> dailyModesFromDB', dailyModesFromDB)
 				let dateRange = []
 				for (let i = 0; i < 7; i++) {
 					dateRange.push(moment().subtract(i, 'd').format('YMD'))
 				}
+				// console.log("dateRange => ", dateRange);
 				// Getting all mood values for the selected range
 				let allModes = {}
 				for (let i = 0; i < 7; i++) {
-					allModes[dateRange[i]] = dailyModesFromDB.map((m) => {
+					let n = dailyModesFromDB.map((m) => {
 						let modeDate = moment(m.createdAt).format('YMD')
 						if (dateRange[i] === modeDate) {
 							return m.mode
@@ -57,10 +57,15 @@ export default function Home() {
 							return 0
 						}
 					})
+					// console.log("n => ", n);
+					if (n.length === 0) {
+						n.push(0)
+					}
+					allModes[dateRange[i]] = n
 				}
-				// console.log('fetchModes -> allModes', allModes)
+				// console.log("allModes => ", allModes);
 				let length = Object.size(allModes)
-				// console.log('fetchModes -> length', length)
+				// console.log("length of allModes => ", length);
 				for (let i = 0; i < length; i++) {
 					let j = 1
 					let total = allModes[dateRange[i]].reduce((total, num) => {
@@ -78,13 +83,11 @@ export default function Home() {
 						allModes[dateRange[i]] = cal
 					}
 				}
-				console.log('fetchModes -> allModes', allModes)
+				console.log('allModes after calculating data => ', allModes)
 				let keysSorted = Object.keys(allModes).sort((a, b) => {
-					console.log('fetchModes -> keysSorted', keysSorted)
 					return allModes[a] - allModes[b]
 				})
 				let newArr = []
-				console.log('fetchModes -> newArr', newArr)
 				for (let i = 0; i < keysSorted.length; i++) {
 					newArr.push(allModes[keysSorted[i]])
 				}
@@ -92,12 +95,73 @@ export default function Home() {
 			}
 		}
 	}
+	// async function fetchModes() {
+	// 	if (user) {
+	// 		const response = await axios
+	// 			.get(`${apiUrl}/user/${user.id}`)
+	// 			.catch((err) => {
+	// 				// console.log('catch err => ', err)
+	// 			})
+	// 		if (response.data.dailymodes) {
+	// 			// Getting range of date for which graph is to build
+	// 			let dailyModesFromDB = response.data.dailymodes
+	// 			console.log('fetchModes -> dailyModesFromDB', dailyModesFromDB)
+	// 			let dateRange = []
+	// 			for (let i = 0; i < 7; i++) {
+	// 				dateRange.push(moment().subtract(i, 'd').format('YMD'))
+	// 			}
+	// 			// Getting all mood values for the selected range
+	// 			let allModes = {}
+	// 			for (let i = 0; i < 7; i++) {
+	// 				allModes[dateRange[i]] = dailyModesFromDB.map((m) => {
+	// 					let modeDate = moment(m.createdAt).format('YMD')
+	// 					if (dateRange[i] === modeDate) {
+	// 						return m.mode
+	// 					} else {
+	// 						return 0
+	// 					}
+	// 				})
+	// 			}
+	// 			// console.log('fetchModes -> allModes', allModes)
+	// 			let length = Object.size(allModes)
+	// 			// console.log('fetchModes -> length', length)
+	// 			for (let i = 0; i < length; i++) {
+	// 				let j = 1
+	// 				let total = allModes[dateRange[i]].reduce((total, num) => {
+	// 					j++
+	// 					return total + num
+	// 				})
+	// 				if (total === 0) {
+	// 					allModes[dateRange[i]] = 0
+	// 				} else {
+	// 					let cal = total / j
+	// 					cal = Math.ceil(cal)
+	// 					if (cal > 5) {
+	// 						cal = 5
+	// 					}
+	// 					allModes[dateRange[i]] = cal
+	// 				}
+	// 			}
+	// 			console.log('fetchModes -> allModes', allModes)
+	// 			let keysSorted = Object.keys(allModes).sort((a, b) => {
+	// 				console.log('fetchModes -> keysSorted', keysSorted)
+	// 				return allModes[a] - allModes[b]
+	// 			})
+	// 			let newArr = []
+	// 			console.log('fetchModes -> newArr', newArr)
+	// 			for (let i = 0; i < keysSorted.length; i++) {
+	// 				newArr.push(allModes[keysSorted[i]])
+	// 			}
+	// 			setModes(newArr)
+	// 		}
+	// 	}
+	// }
 	useEffect(() => {
 		fetchModes()
 	}, [])
 
-	const sortedModes = dailyModes.reverse((a, b) => a.id - b.id)
-	console.log('ProfileScreen -> sortedModes', sortedModes)
+	// const sortedModes = dailyModes.reverse((a, b) => a.id - b.id)
+	// console.log('ProfileScreen -> sortedModes', sortedModes)
 
 	async function fetchDailyModes() {
 		if (user) {
@@ -109,7 +173,16 @@ export default function Home() {
 			if (response.data.dailymodes) {
 				// Getting range of date for which graph is to build
 				let dailyModesFromDB = response.data.dailymodes
-				setDailyModes(dailyModesFromDB)
+				console.log('dailyModesFromDB => ', dailyModesFromDB)
+				let sortedArray = dailyModesFromDB.sort((a, b) => {
+					if (a.createdAt < b.createdAt) {
+						return 1
+					} else {
+						return -1
+					}
+				})
+				console.log('sortedArray => ', sortedArray)
+				setDailyModes(sortedArray)
 			}
 		}
 	}
@@ -276,7 +349,7 @@ export default function Home() {
 					<Text style={styles.small}>Your mode history</Text>
 					<View style={{ height: 20 }} />
 
-					{sortedModes.map((mode) => {
+					{dailyModes.map((mode) => {
 						return (
 							<ModePreview
 								key={mode.id}

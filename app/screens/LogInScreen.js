@@ -13,8 +13,8 @@ export default function LogInScreen() {
 	const dispatch = useDispatch()
 	const user = useSelector((state) => state)
 	// console.log('user => ', user)
-	const [email, setEmail] = useState('alex@mode.com')
-	const [password, setPassword] = useState('alexmode')
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
 	const [loading, setLoading] = useState(false)
 	const [showError, setShowError] = useState('')
 

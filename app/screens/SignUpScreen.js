@@ -12,12 +12,12 @@ import { apiUrl } from '../config/constants'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function SignUpScreen() {
-	const [firstName, setFirstName] = useState('')
-	const [lastName, setLastName] = useState('')
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [dateOfBirth, setDateOfBirth] = useState('')
-	const [githubLink, setGithubLink] = useState('') // this should be github handle, not url
+	const [firstName, setFirstName] = useState('John')
+	const [lastName, setLastName] = useState('Doe')
+	const [email, setEmail] = useState('john@doe.com')
+	const [password, setPassword] = useState('john')
+	const [dateOfBirth, setDateOfBirth] = useState('2000-02-20')
+	const [githubLink, setGithubLink] = useState('johndoe') // this should be github handle, not url
 	const [showError, setShowError] = useState('')
 	const [loading, setLoading] = useState(false)
 	const dispatch = useDispatch()
