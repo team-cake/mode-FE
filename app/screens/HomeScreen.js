@@ -65,18 +65,22 @@ export default function Home() {
 				}
 				// console.log("allModes => ", allModes);
 				let length = Object.size(allModes)
-				// console.log("length of allModes => ", length);
+				console.log('length of allModes => ', length)
 				for (let i = 0; i < length; i++) {
-					let j = 1
+					let j = 0
 					let total = allModes[dateRange[i]].reduce((total, num) => {
-						j++
+						if (num > 0) {
+							j++
+						}
 						return total + num
 					})
+					console.log(' total ', dateRange[i], ' => ', total)
 					if (total === 0) {
 						allModes[dateRange[i]] = 0
 					} else {
+						console.log('j => ', j)
 						let cal = total / j
-						cal = Math.ceil(cal)
+						cal = Math.round(cal)
 						if (cal > 5) {
 							cal = 5
 						}
@@ -85,12 +89,15 @@ export default function Home() {
 				}
 				console.log('allModes after calculating data => ', allModes)
 				let keysSorted = Object.keys(allModes).sort((a, b) => {
-					return allModes[a] - allModes[b]
+					return a - b
 				})
+				console.log('keysSorted => ', keysSorted)
 				let newArr = []
 				for (let i = 0; i < keysSorted.length; i++) {
 					newArr.push(allModes[keysSorted[i]])
 				}
+
+				console.log('newArr => ', newArr)
 				setModes(newArr)
 			}
 		}
